@@ -121,7 +121,10 @@ public class ExportHandler {
 				if(step.equals(exportStep)) {			    	
 			    	if(step.getStepType().equals("NumericLimitTest") || step.getStepType().equals("NI_MultipleNumericLimitTest"))
 			    	{
-				    	row.createCell(i).setCellValue(Double.parseDouble(step.getMeasureValue()));			    		
+			    		try
+			    		{
+			    			row.createCell(i).setCellValue(Double.parseDouble(step.getMeasureValue()));
+			    		}catch(Exception ex) {ex.printStackTrace();}
 			    	}
 			    	else
 			    	{

@@ -95,6 +95,21 @@ public class ReportParser {
 		result.setTotalTestTime(Float.parseFloat(GetNodeAttValue(ResultSetNode,"tr:Extension/ts:TSStepProperties/ts:TotalTime", "value").trim()));
 		result.setResult(GetNodeAttValue(ResultSetNode,"tr:Outcome", "value").trim());
 		
+		String failureStack = "";
+		if(!result.getResult().equalsIgnoreCase("Passed")) {
+			List<Node> criticalFailureStackEntryNodes = (List<Node>)ResultSetNode.selectNodes("//ts:CriticalFailureStackEntry");
+			for(int i=criticalFailureStackEntryNodes.size()-1; i>=0; i--) {
+				if(i==0) {
+					failureStack += GetNodeAttValue(criticalFailureStackEntryNodes.get(i),null, "stepName").trim();
+				} else {
+					failureStack += GetNodeAttValue(criticalFailureStackEntryNodes.get(i),null, "stepName").trim() + " << ";
+				}
+			}
+		}
+		
+		result.setFailureStack(failureStack);
+		
+		
 		List<Node> StepNodes = (List<Node>)ResultSetNode.selectNodes("//tr:Test");
 		List<Step> steps = new ArrayList<Step>();
 		for (Node stepNode : StepNodes) {

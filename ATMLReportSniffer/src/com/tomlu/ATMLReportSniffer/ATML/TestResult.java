@@ -8,6 +8,7 @@ public class TestResult {
 	private String result;
 	private String startTime;
 	private String stopTime;
+	private String failureStack;
 
 
 	private float totalTestTime;
@@ -27,6 +28,14 @@ public class TestResult {
 
 	public void setStopTime(String stopTime) {
 		this.stopTime = stopTime;
+	}
+
+	public String getFailureStack() {
+		return failureStack;
+	}
+
+	public void setFailureStack(String failureStack) {
+		this.failureStack = failureStack;
 	}
 
 	public float getTotalTestTime() {

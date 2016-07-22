@@ -97,38 +97,50 @@ public class ExportHandler {
 	
 	private void ExportHeader() {
 	    Row row = sheet.createRow(0);
-	    row.createCell(0).setCellValue("SerialNumber");
-	    row.createCell(1).setCellValue("StartTime");
-	    row.createCell(2).setCellValue("Result");
+	    int cellIndex = 0;
+	    row.createCell(cellIndex++).setCellValue("SerialNumber");
+	    row.createCell(cellIndex++).setCellValue("TestTime");
+	    row.createCell(cellIndex++).setCellValue("StartTime");
+	    row.createCell(cellIndex++).setCellValue("Result");
+	    if(includeFailResult) {
+		    row.createCell(cellIndex++).setCellValue("FailureStep");
+	    }
 	    
-	    for(int i=3; i<ExportStepList.size()+3; i++) {
-	    	row.createCell(i).setCellValue(ExportStepList.get(i-3).getName());
+	    int fixCellLength = cellIndex;
+	    for(; cellIndex<ExportStepList.size()+fixCellLength; cellIndex++) {
+	    	row.createCell(fixCellLength).setCellValue(ExportStepList.get(cellIndex-fixCellLength).getName());
 	    }		
 	}
 	
 	private void ExportSingleResult(TestResult result, int rowIndex) {
 		
 	    Row row = sheet.createRow(rowIndex);
-	    row.createCell(0).setCellValue(result.getUut().getSerialNumber());
-	    row.createCell(1).setCellValue(result.getStartTime());
-	    row.createCell(2).setCellValue(result.getResult());
+	    int cellIndex = 0;
+	    row.createCell(cellIndex++).setCellValue(result.getUut().getSerialNumber());
+	    row.createCell(cellIndex++).setCellValue(result.getTotalTestTime());
+	    row.createCell(cellIndex++).setCellValue(result.getStartTime());
+	    row.createCell(cellIndex++).setCellValue(result.getResult());
+	    if(includeFailResult) {
+		    row.createCell(cellIndex++).setCellValue(result.getFailureStack());
+	    }
 	    
-		List<Step> stepList = result.getSteps();		
-		for(int i=3; i<ExportStepList.size()+3; i++) {
+		List<Step> stepList = result.getSteps();
+	    int fixCellLength = cellIndex;
+		for(; cellIndex<ExportStepList.size()+fixCellLength; cellIndex++) {
 			
-			Step exportStep = ExportStepList.get(i-3);
+			Step exportStep = ExportStepList.get(cellIndex-fixCellLength);
 			for(Step step : stepList) {			
 				if(step.equals(exportStep)) {			    	
 			    	if(step.getStepType().equals("NumericLimitTest") || step.getStepType().equals("NI_MultipleNumericLimitTest"))
 			    	{
 			    		try
 			    		{
-			    			row.createCell(i).setCellValue(Double.parseDouble(step.getMeasureValue()));
+			    			row.createCell(cellIndex).setCellValue(Double.parseDouble(step.getMeasureValue()));
 			    		}catch(Exception ex) {ex.printStackTrace();}
 			    	}
 			    	else
 			    	{
-				    	row.createCell(i).setCellValue(step.getMeasureValue());			    		
+				    	row.createCell(cellIndex).setCellValue(step.getMeasureValue());			    		
 			    	}
 				}				
 			}

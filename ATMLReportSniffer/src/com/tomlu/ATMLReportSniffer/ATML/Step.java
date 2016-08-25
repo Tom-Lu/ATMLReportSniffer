@@ -76,9 +76,16 @@ public class Step {
 
 		if(obj instanceof Step) {
 			Step step = (Step)obj;
-			return getIndex() == step.getIndex() &&
-					getName().equals(step.getName()) && 
-					getStepId().equals(step.getStepId());			
+			
+			if(ExportHandler.isAccurateStepMatch()) {
+				return getIndex() == step.getIndex() &&
+						getName().equals(step.getName()) && 
+						getStepId().equals(step.getStepId());
+			}else{
+				return getIndex() == step.getIndex() &&
+						getName().equals(step.getName());
+			}
+			
 		} else {
 			return false;
 		}

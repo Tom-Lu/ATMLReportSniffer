@@ -16,7 +16,8 @@ import com.tomlu.ATMLReportSniffer.GUI.UIHandler;
 public class ExportHandler {
 	
 	private static boolean includePassResult = true;
-	private static boolean includeFailResult = true;	
+	private static boolean includeFailResult = true;
+	private static boolean accurateStepMatch = true;
 
 	public static boolean isIncludePassResult() {
 		return includePassResult;
@@ -32,6 +33,14 @@ public class ExportHandler {
 
 	public static void setIncludeFailResult(boolean includeFailResult) {
 		ExportHandler.includeFailResult = includeFailResult;
+	}
+	
+	public static boolean isAccurateStepMatch() {
+		return accurateStepMatch;
+	}
+
+	public static void setAccurateStepMatch(boolean accurateStepMatch) {
+		ExportHandler.accurateStepMatch = accurateStepMatch;
 	}
 
 	private File ExportFile;

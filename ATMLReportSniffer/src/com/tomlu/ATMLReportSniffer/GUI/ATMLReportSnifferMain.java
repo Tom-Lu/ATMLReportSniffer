@@ -69,6 +69,7 @@ public class ATMLReportSnifferMain extends JFrame {
 	private JCheckBox chckbxStringValueTest;
 	private JCheckBox chckbxPassResult;
 	private JCheckBox chckbxFailResult;
+	private JCheckBox chckbxAccurateStepMatch;
 	private TestResult sampleTestResult = null;
 	private List<CheckListItem> currentCheckListItems;
 	private String SampleReport = "";
@@ -163,9 +164,9 @@ public class ATMLReportSnifferMain extends JFrame {
 		panel.add(panel_2, gbc_panel_2);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_2.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_2.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 		
 		JLabel lblExportToFile = new JLabel(Messages.getString("ATMLReportSnifferMain.lblExportToFile.text")); //$NON-NLS-1$
@@ -189,7 +190,7 @@ public class ATMLReportSnifferMain extends JFrame {
 		
 		JButton buttonBroswe = new JButton(Messages.getString("ATMLReportSnifferMain.button.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_buttonBroswe = new GridBagConstraints();
-		gbc_buttonBroswe.insets = new Insets(0, 0, 5, 5);
+		gbc_buttonBroswe.insets = new Insets(0, 0, 5, 0);
 		gbc_buttonBroswe.gridx = 1;
 		gbc_buttonBroswe.gridy = 2;
 		panel_2.add(buttonBroswe, gbc_buttonBroswe);
@@ -211,14 +212,6 @@ public class ATMLReportSnifferMain extends JFrame {
 		gbc_chckbxPassResult.gridx = 0;
 		gbc_chckbxPassResult.gridy = 4;
 		panel_2.add(chckbxPassResult, gbc_chckbxPassResult);
-		
-		chckbxFailResult = new JCheckBox(Messages.getString("ATMLReportSnifferMain.chckbxFailResult.text")); //$NON-NLS-1$
-		GridBagConstraints gbc_chckbxFailResult = new GridBagConstraints();
-		gbc_chckbxFailResult.anchor = GridBagConstraints.WEST;
-		gbc_chckbxFailResult.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxFailResult.gridx = 0;
-		gbc_chckbxFailResult.gridy = 5;
-		panel_2.add(chckbxFailResult, gbc_chckbxFailResult);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setText(Messages.getString("ATMLReportSnifferMain.textArea.text")); //$NON-NLS-1$
@@ -389,6 +382,7 @@ public class ATMLReportSnifferMain extends JFrame {
 							}
 							ExportHandler.setIncludePassResult(chckbxPassResult.isSelected());
 							ExportHandler.setIncludeFailResult(chckbxFailResult.isSelected());
+							ExportHandler.setAccurateStepMatch(chckbxAccurateStepMatch.isSelected());
 							ExportHandler.Export(new File(ExportFile), results, currentExportStepList);
 						}
 					}.start();
@@ -443,6 +437,23 @@ public class ATMLReportSnifferMain extends JFrame {
 		
 		lblReportSampleFile.setText("");
 		textFieldExportFileName.setText("");
+		
+		chckbxFailResult = new JCheckBox(Messages.getString("ATMLReportSnifferMain.chckbxFailResult.text")); //$NON-NLS-1$
+		GridBagConstraints gbc_chckbxFailResult = new GridBagConstraints();
+		gbc_chckbxFailResult.anchor = GridBagConstraints.WEST;
+		gbc_chckbxFailResult.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxFailResult.gridx = 0;
+		gbc_chckbxFailResult.gridy = 5;
+		panel_2.add(chckbxFailResult, gbc_chckbxFailResult);
+		
+		chckbxAccurateStepMatch = new JCheckBox(Messages.getString("ATMLReportSnifferMain.chckbxAccurateStepMatch.text")); //$NON-NLS-1$
+		chckbxAccurateStepMatch.setSelected(true);
+		GridBagConstraints gbc_chckbxAccurateStepMatch = new GridBagConstraints();
+		gbc_chckbxAccurateStepMatch.anchor = GridBagConstraints.WEST;
+		gbc_chckbxAccurateStepMatch.insets = new Insets(0, 0, 0, 5);
+		gbc_chckbxAccurateStepMatch.gridx = 0;
+		gbc_chckbxAccurateStepMatch.gridy = 6;
+		panel_2.add(chckbxAccurateStepMatch, gbc_chckbxAccurateStepMatch);
 		StepFilterOptionChangeListener.itemStateChanged(null);
 
 		UIHandler.Init(textArea, progressBar);
